@@ -41,9 +41,17 @@ spec:
         spec:
           serviceAccountName: pipeline-trigger-sa
           restartPolicy: Never
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           containers:
             - name: trigger
               image: bitnami/kubectl
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: ["ALL"]
               command:
                 - /bin/sh
                 - -c
