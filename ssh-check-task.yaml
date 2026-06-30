@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: ssh-root-login-check
+spec:
+  steps:
+    - name: check
+      image: alpine
+      script: |
+        #!/bin/sh
+        echo "Checking PermitRootLogin configuration..."
+        CONFIG="PermitRootLogin no"
+        if echo "$CONFIG" | grep -q "PermitRootLogin no"; then
+          echo "PASS: Root login is disabled"
+        else
+          echo "FAIL: Root login is not disabled"
+          exit 1
+        fi

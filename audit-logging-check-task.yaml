@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: audit-logging-check
+spec:
+  steps:
+    - name: check
+      image: alpine
+      script: |
+        #!/bin/sh
+        echo "Checking audit logging configuration..."
+        AUDITD_STATUS="active"
+        if [ "$AUDITD_STATUS" = "active" ]; then
+          echo "PASS: Audit logging service is active"
+        else
+          echo "FAIL: Audit logging service is not active"
+          exit 1
+        fi

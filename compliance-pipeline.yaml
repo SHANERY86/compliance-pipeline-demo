@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: compliance-scan
+spec:
+  tasks:
+    - name: check-ssh
+      taskRef:
+        name: ssh-root-login-check
+    - name: check-audit-logging
+      taskRef:
+        name: audit-logging-check
+      runAfter:
+        - check-ssh
