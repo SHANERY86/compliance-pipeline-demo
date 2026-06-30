@@ -6,6 +6,13 @@ spec:
   steps:
     - name: check
       image: alpine
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop: ["ALL"]
       script: |
         #!/bin/sh
         echo "Checking audit logging configuration..."
